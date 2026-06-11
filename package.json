@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "npm run prisma:generate && nest build",
+    "build": "npm run prisma:generate && nest build && cp @generated/prisma/package.json dist/@generated/prisma/package.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prisma:generate": "prisma generate && node -e \"require('fs').writeFileSync('@generated/prisma/package.json','{\\\"type\\\":\\\"module\\\"}\\n')\"",
     "start": "nest start",

@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import type { PrismaClient } from '../@generated/prisma/client.js';
+import type { PrismaClient } from '../../@generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 let PrismaClientClass: typeof PrismaClient | null = null;
@@ -10,7 +10,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     if (!PrismaClientClass) {
-      const mod = await import('../@generated/prisma/client.js');
+      const mod = await import('../../@generated/prisma/client.js');
       PrismaClientClass = mod.PrismaClient;
     }
 
