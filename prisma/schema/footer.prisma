@@ -1,0 +1,38 @@
+model Footer {
+  id          String   @id @default(cuid())
+  logo        String?
+  description String?
+  phone       String?
+  email       String?
+  address     String?
+  copyright   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  socialLinks FooterSocial[]
+  sections    FooterSection[]
+}
+
+model FooterSocial {
+  id       String @id @default(cuid())
+  name     String
+  icon     String?
+  url      String
+  footerId String
+  footer   Footer @relation(fields: [footerId], references: [id], onDelete: Cascade)
+}
+
+model FooterSection {
+  id       String @id @default(cuid())
+  title    String
+  footerId String
+  footer   Footer   @relation(fields: [footerId], references: [id], onDelete: Cascade)
+  links    FooterLink[]
+}
+
+model FooterLink {
+  id        String        @id @default(cuid())
+  label     String
+  href      String
+  sectionId String
+  section   FooterSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}

@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '../@generated/prisma/client.js';
+import type { PrismaClient } from '../@generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 
 let PrismaClientClass: typeof PrismaClient | null = null;
@@ -30,5 +30,25 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
 
   get user() {
     return this._prisma.user;
+  }
+
+  get category() {
+    return this._prisma.category;
+  }
+
+  get companyInfo() {
+    return this._prisma.companyInfo;
+  }
+
+  get footer() {
+    return this._prisma.footer;
+  }
+
+  get banner() {
+    return this._prisma.banner;
+  }
+
+  get client() {
+    return this._prisma.client;
   }
 }

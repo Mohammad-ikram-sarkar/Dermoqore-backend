@@ -1,0 +1,29 @@
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  segment   String
+  status    String   @default("Active")
+  avatar    String
+  color     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  banners   Banner[]
+}
+
+model Banner {
+  id          String   @id @default(cuid())
+  title       String
+  tag         String
+  description String?
+  imageType   String
+  device      String   @default("desktop")
+  imageUrl    String?
+  status      String   @default("Draft")
+  isActive    Boolean  @default(true)
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId])
+}
