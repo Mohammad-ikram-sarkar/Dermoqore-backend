@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma.service';
-import { ProductStatus } from '../../../@generated/prisma/enums.js';
+import { ProductStatus } from '../../@generated/prisma/enums.js';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductQueryDto, ProductSortDto } from './dto/product-query.dto';
