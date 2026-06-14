@@ -36,4 +36,8 @@ export class UpdateBannerDto {
   @IsString()
   @IsOptional()
   clientId?: string;
+
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
 }

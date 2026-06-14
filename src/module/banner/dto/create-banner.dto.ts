@@ -36,4 +36,8 @@ export class CreateBannerDto {
   @IsString()
   @IsNotEmpty()
   clientId: string;
+
+  @IsString()
+  @IsOptional()
+  categoryId?: string;
 }

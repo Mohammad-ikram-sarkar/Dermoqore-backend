@@ -28,6 +28,11 @@ export type Client = Prisma.ClientModel
  */
 export type Banner = Prisma.BannerModel
 /**
+ * Model Brand
+ * 
+ */
+export type Brand = Prisma.BrandModel
+/**
  * Model Category
  * 
  */
@@ -57,6 +62,36 @@ export type FooterSection = Prisma.FooterSectionModel
  * 
  */
 export type FooterLink = Prisma.FooterLinkModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model ProductImage
+ * 
+ */
+export type ProductImage = Prisma.ProductImageModel
+/**
+ * Model Ingredient
+ * 
+ */
+export type Ingredient = Prisma.IngredientModel
+/**
+ * Model ProductUsage
+ * 
+ */
+export type ProductUsage = Prisma.ProductUsageModel
+/**
+ * Model ProductBenefit
+ * 
+ */
+export type ProductBenefit = Prisma.ProductBenefitModel
+/**
+ * Model ProductSEO
+ * 
+ */
+export type ProductSEO = Prisma.ProductSEOModel
 /**
  * Model User
  * 

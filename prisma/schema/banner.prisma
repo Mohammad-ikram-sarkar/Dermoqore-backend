@@ -22,8 +22,11 @@ model Banner {
   isActive    Boolean  @default(true)
   clientId    String
   client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([clientId])
+  @@index([categoryId])
 }

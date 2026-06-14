@@ -10,6 +10,8 @@ import { CompanyInfoModule } from './module/companyinfo/companyinfo.module';
 import { FooterModule } from './module/footer/footer.module';
 import { BannerModule } from './module/banner/banner.module';
 import { ClientModule } from './module/client/client.module';
+import { BrandModule } from './module/brand/brand.module';
+import { ProductModule } from './module/product/product.module';
 import { envConfig } from './config/env.config';
 
 @Module({
@@ -23,6 +25,8 @@ import { envConfig } from './config/env.config';
     FooterModule,
     BannerModule,
     ClientModule,
+    BrandModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

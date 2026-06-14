@@ -35,6 +35,7 @@ export type BannerMinAggregateOutputType = {
   status: string | null
   isActive: boolean | null
   clientId: string | null
+  categoryId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +51,7 @@ export type BannerMaxAggregateOutputType = {
   status: string | null
   isActive: boolean | null
   clientId: string | null
+  categoryId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +67,7 @@ export type BannerCountAggregateOutputType = {
   status: number
   isActive: number
   clientId: number
+  categoryId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -82,6 +85,7 @@ export type BannerMinAggregateInputType = {
   status?: true
   isActive?: true
   clientId?: true
+  categoryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -97,6 +101,7 @@ export type BannerMaxAggregateInputType = {
   status?: true
   isActive?: true
   clientId?: true
+  categoryId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,6 +117,7 @@ export type BannerCountAggregateInputType = {
   status?: true
   isActive?: true
   clientId?: true
+  categoryId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -200,6 +206,7 @@ export type BannerGroupByOutputType = {
   status: string
   isActive: boolean
   clientId: string
+  categoryId: string | null
   createdAt: Date
   updatedAt: Date
   _count: BannerCountAggregateOutputType | null
@@ -236,9 +243,11 @@ export type BannerWhereInput = {
   status?: Prisma.StringFilter<"Banner"> | string
   isActive?: Prisma.BoolFilter<"Banner"> | boolean
   clientId?: Prisma.StringFilter<"Banner"> | string
+  categoryId?: Prisma.StringNullableFilter<"Banner"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }
 
 export type BannerOrderByWithRelationInput = {
@@ -252,9 +261,11 @@ export type BannerOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   client?: Prisma.ClientOrderByWithRelationInput
+  category?: Prisma.CategoryOrderByWithRelationInput
 }
 
 export type BannerWhereUniqueInput = Prisma.AtLeast<{
@@ -271,9 +282,11 @@ export type BannerWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"Banner"> | string
   isActive?: Prisma.BoolFilter<"Banner"> | boolean
   clientId?: Prisma.StringFilter<"Banner"> | string
+  categoryId?: Prisma.StringNullableFilter<"Banner"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }, "id">
 
 export type BannerOrderByWithAggregationInput = {
@@ -287,6 +300,7 @@ export type BannerOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BannerCountOrderByAggregateInput
@@ -308,6 +322,7 @@ export type BannerScalarWhereWithAggregatesInput = {
   status?: Prisma.StringWithAggregatesFilter<"Banner"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Banner"> | boolean
   clientId?: Prisma.StringWithAggregatesFilter<"Banner"> | string
+  categoryId?: Prisma.StringNullableWithAggregatesFilter<"Banner"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Banner"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Banner"> | Date | string
 }
@@ -325,6 +340,7 @@ export type BannerCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutBannersInput
+  category?: Prisma.CategoryCreateNestedOneWithoutBannersInput
 }
 
 export type BannerUncheckedCreateInput = {
@@ -338,6 +354,7 @@ export type BannerUncheckedCreateInput = {
   status?: string
   isActive?: boolean
   clientId: string
+  categoryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -355,6 +372,7 @@ export type BannerUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutBannersNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutBannersNestedInput
 }
 
 export type BannerUncheckedUpdateInput = {
@@ -368,6 +386,7 @@ export type BannerUncheckedUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -383,6 +402,7 @@ export type BannerCreateManyInput = {
   status?: string
   isActive?: boolean
   clientId: string
+  categoryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,6 +432,7 @@ export type BannerUncheckedUpdateManyInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -437,6 +458,7 @@ export type BannerCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +474,7 @@ export type BannerMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -467,6 +490,7 @@ export type BannerMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -521,6 +545,48 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type BannerCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput> | Prisma.BannerCreateWithoutCategoryInput[] | Prisma.BannerUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.BannerCreateOrConnectWithoutCategoryInput | Prisma.BannerCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.BannerCreateManyCategoryInputEnvelope
+  connect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+}
+
+export type BannerUncheckedCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput> | Prisma.BannerCreateWithoutCategoryInput[] | Prisma.BannerUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.BannerCreateOrConnectWithoutCategoryInput | Prisma.BannerCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.BannerCreateManyCategoryInputEnvelope
+  connect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+}
+
+export type BannerUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput> | Prisma.BannerCreateWithoutCategoryInput[] | Prisma.BannerUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.BannerCreateOrConnectWithoutCategoryInput | Prisma.BannerCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.BannerUpsertWithWhereUniqueWithoutCategoryInput | Prisma.BannerUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.BannerCreateManyCategoryInputEnvelope
+  set?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  disconnect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  delete?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  connect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  update?: Prisma.BannerUpdateWithWhereUniqueWithoutCategoryInput | Prisma.BannerUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.BannerUpdateManyWithWhereWithoutCategoryInput | Prisma.BannerUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.BannerScalarWhereInput | Prisma.BannerScalarWhereInput[]
+}
+
+export type BannerUncheckedUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput> | Prisma.BannerCreateWithoutCategoryInput[] | Prisma.BannerUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.BannerCreateOrConnectWithoutCategoryInput | Prisma.BannerCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.BannerUpsertWithWhereUniqueWithoutCategoryInput | Prisma.BannerUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.BannerCreateManyCategoryInputEnvelope
+  set?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  disconnect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  delete?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  connect?: Prisma.BannerWhereUniqueInput | Prisma.BannerWhereUniqueInput[]
+  update?: Prisma.BannerUpdateWithWhereUniqueWithoutCategoryInput | Prisma.BannerUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.BannerUpdateManyWithWhereWithoutCategoryInput | Prisma.BannerUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.BannerScalarWhereInput | Prisma.BannerScalarWhereInput[]
+}
+
 export type BannerCreateWithoutClientInput = {
   id?: string
   title: string
@@ -533,6 +599,7 @@ export type BannerCreateWithoutClientInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  category?: Prisma.CategoryCreateNestedOneWithoutBannersInput
 }
 
 export type BannerUncheckedCreateWithoutClientInput = {
@@ -545,6 +612,7 @@ export type BannerUncheckedCreateWithoutClientInput = {
   imageUrl?: string | null
   status?: string
   isActive?: boolean
+  categoryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -589,8 +657,65 @@ export type BannerScalarWhereInput = {
   status?: Prisma.StringFilter<"Banner"> | string
   isActive?: Prisma.BoolFilter<"Banner"> | boolean
   clientId?: Prisma.StringFilter<"Banner"> | string
+  categoryId?: Prisma.StringNullableFilter<"Banner"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Banner"> | Date | string
+}
+
+export type BannerCreateWithoutCategoryInput = {
+  id?: string
+  title: string
+  tag: string
+  description?: string | null
+  imageType: string
+  device?: string
+  imageUrl?: string | null
+  status?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutBannersInput
+}
+
+export type BannerUncheckedCreateWithoutCategoryInput = {
+  id?: string
+  title: string
+  tag: string
+  description?: string | null
+  imageType: string
+  device?: string
+  imageUrl?: string | null
+  status?: string
+  isActive?: boolean
+  clientId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BannerCreateOrConnectWithoutCategoryInput = {
+  where: Prisma.BannerWhereUniqueInput
+  create: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput>
+}
+
+export type BannerCreateManyCategoryInputEnvelope = {
+  data: Prisma.BannerCreateManyCategoryInput | Prisma.BannerCreateManyCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type BannerUpsertWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.BannerWhereUniqueInput
+  update: Prisma.XOR<Prisma.BannerUpdateWithoutCategoryInput, Prisma.BannerUncheckedUpdateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.BannerCreateWithoutCategoryInput, Prisma.BannerUncheckedCreateWithoutCategoryInput>
+}
+
+export type BannerUpdateWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.BannerWhereUniqueInput
+  data: Prisma.XOR<Prisma.BannerUpdateWithoutCategoryInput, Prisma.BannerUncheckedUpdateWithoutCategoryInput>
+}
+
+export type BannerUpdateManyWithWhereWithoutCategoryInput = {
+  where: Prisma.BannerScalarWhereInput
+  data: Prisma.XOR<Prisma.BannerUpdateManyMutationInput, Prisma.BannerUncheckedUpdateManyWithoutCategoryInput>
 }
 
 export type BannerCreateManyClientInput = {
@@ -603,6 +728,7 @@ export type BannerCreateManyClientInput = {
   imageUrl?: string | null
   status?: string
   isActive?: boolean
+  categoryId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -619,6 +745,7 @@ export type BannerUpdateWithoutClientInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.CategoryUpdateOneWithoutBannersNestedInput
 }
 
 export type BannerUncheckedUpdateWithoutClientInput = {
@@ -631,6 +758,7 @@ export type BannerUncheckedUpdateWithoutClientInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -645,6 +773,67 @@ export type BannerUncheckedUpdateManyWithoutClientInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BannerCreateManyCategoryInput = {
+  id?: string
+  title: string
+  tag: string
+  description?: string | null
+  imageType: string
+  device?: string
+  imageUrl?: string | null
+  status?: string
+  isActive?: boolean
+  clientId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BannerUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageType?: Prisma.StringFieldUpdateOperationsInput | string
+  device?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutBannersNestedInput
+}
+
+export type BannerUncheckedUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageType?: Prisma.StringFieldUpdateOperationsInput | string
+  device?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BannerUncheckedUpdateManyWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  tag?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageType?: Prisma.StringFieldUpdateOperationsInput | string
+  device?: Prisma.StringFieldUpdateOperationsInput | string
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -662,9 +851,11 @@ export type BannerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   status?: boolean
   isActive?: boolean
   clientId?: boolean
+  categoryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["banner"]>
 
 export type BannerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -678,9 +869,11 @@ export type BannerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   isActive?: boolean
   clientId?: boolean
+  categoryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["banner"]>
 
 export type BannerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -694,9 +887,11 @@ export type BannerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   status?: boolean
   isActive?: boolean
   clientId?: boolean
+  categoryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["banner"]>
 
 export type BannerSelectScalar = {
@@ -710,25 +905,30 @@ export type BannerSelectScalar = {
   status?: boolean
   isActive?: boolean
   clientId?: boolean
+  categoryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BannerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "tag" | "description" | "imageType" | "device" | "imageUrl" | "status" | "isActive" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["banner"]>
+export type BannerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "tag" | "description" | "imageType" | "device" | "imageUrl" | "status" | "isActive" | "clientId" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["banner"]>
 export type BannerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }
 export type BannerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }
 export type BannerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Banner$categoryArgs<ExtArgs>
 }
 
 export type $BannerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Banner"
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>
+    category: Prisma.$CategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -741,6 +941,7 @@ export type $BannerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     status: string
     isActive: boolean
     clientId: string
+    categoryId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["banner"]>
@@ -1138,6 +1339,7 @@ readonly fields: BannerFieldRefs;
 export interface Prisma__BannerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.Banner$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Banner$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1177,6 +1379,7 @@ export interface BannerFieldRefs {
   readonly status: Prisma.FieldRef<"Banner", 'String'>
   readonly isActive: Prisma.FieldRef<"Banner", 'Boolean'>
   readonly clientId: Prisma.FieldRef<"Banner", 'String'>
+  readonly categoryId: Prisma.FieldRef<"Banner", 'String'>
   readonly createdAt: Prisma.FieldRef<"Banner", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Banner", 'DateTime'>
 }
@@ -1577,6 +1780,25 @@ export type BannerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Banners to delete.
    */
   limit?: number
+}
+
+/**
+ * Banner.category
+ */
+export type Banner$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**

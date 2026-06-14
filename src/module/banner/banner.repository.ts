@@ -9,7 +9,7 @@ export class BannerRepository {
 
   async findAll() {
     return this.prisma.banner.findMany({
-      include: { client: true },
+      include: { client: true, category: true },
       orderBy: { updatedAt: 'desc' },
     });
   }
@@ -17,14 +17,14 @@ export class BannerRepository {
   async findById(id: string) {
     return this.prisma.banner.findUnique({
       where: { id },
-      include: { client: true },
+      include: { client: true, category: true },
     });
   }
 
   async findByClientId(clientId: string) {
     return this.prisma.banner.findMany({
       where: { clientId },
-      include: { client: true },
+      include: { client: true, category: true },
       orderBy: { updatedAt: 'desc' },
     });
   }
@@ -41,8 +41,9 @@ export class BannerRepository {
         status: dto.status ?? 'Draft',
         isActive: dto.isActive ?? true,
         clientId: dto.clientId,
+        categoryId: dto.categoryId ?? null,
       },
-      include: { client: true },
+      include: { client: true, category: true },
     });
   }
 
@@ -59,6 +60,7 @@ export class BannerRepository {
         status: dto.status,
         isActive: dto.isActive,
         clientId: dto.clientId,
+        categoryId: dto.categoryId,
       },
     });
     return this.findById(id);
@@ -72,7 +74,7 @@ export class BannerRepository {
     return this.prisma.banner.update({
       where: { id },
       data: { imageUrl },
-      include: { client: true },
+      include: { client: true, category: true },
     });
   }
 }
