@@ -87,6 +87,25 @@ export class ProductRepository {
     };
   }
 
+  async findBestSellers(limit: number) {
+    const bestSellers = await this.prisma.orderItem.groupBy({
+      by: ['productId'],
+      _sum: { quantity: true },
+      orderBy: { _sum: { quantity: 'desc' } },
+      take: limit,
+    });
+
+    const ids = bestSellers.map((b) => b.productId);
+    if (ids.length === 0) return [];
+
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: ids }, status: ProductStatus.ACTIVE },
+      include: productInclude,
+    });
+
+    return ids.map((id) => products.find((p) => p.id === id)).filter(Boolean);
+  }
+
   async findById(id: string) {
     return this.prisma.product.findUnique({
       where: { id },

@@ -1,0 +1,16 @@
+enum DeliveryZone {
+  INSIDE_DHAKA
+  OUTSIDE_DHAKA
+}
+
+model DeliveryCharge {
+  id        String       @id @default(cuid())
+  zone      DeliveryZone
+  charge    Decimal      @db.Decimal(10, 2)
+  minOrder  Decimal?     @db.Decimal(10, 2)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([zone])
+  @@map("delivery_charges")
+}

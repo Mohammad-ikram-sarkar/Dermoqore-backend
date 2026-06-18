@@ -1,0 +1,78 @@
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+model Address {
+  id        String       @id @default(cuid())
+  userId    String
+  label     String       @default("Home")
+  name      String
+  phone     String
+  address   String
+  area      String?
+  city      String       @default("Dhaka")
+  zone      DeliveryZone
+  isDefault Boolean      @default(false)
+
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orders    Order[]      @relation("ShippingAddress")
+
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([userId])
+}
+
+model Order {
+  id                String       @id @default(cuid())
+  orderNumber       String       @unique
+  userId            String
+  status            OrderStatus  @default(PENDING)
+  subtotal          Decimal      @db.Decimal(10, 2)
+  shippingCharge    Decimal      @db.Decimal(10, 2) @default(0)
+  discount          Decimal      @db.Decimal(10, 2) @default(0)
+  total             Decimal      @db.Decimal(10, 2)
+  notes             String?
+  deliveryZone      DeliveryZone
+
+  shippingAddressId String?
+  shippingAddress   Address?     @relation("ShippingAddress", fields: [shippingAddressId], references: [id])
+
+  user              User         @relation(fields: [userId], references: [id])
+  items             OrderItem[]
+
+  paidAt            DateTime?
+  deliveredAt       DateTime?
+  cancelledAt       DateTime?
+
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  productId  String
+  name       String
+  image      String?
+  quantity   Int      @default(1)
+  unitPrice  Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}

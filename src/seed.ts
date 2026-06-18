@@ -12,23 +12,41 @@ async function bootstrap() {
     where: { email: adminEmail },
   });
 
-  if (existing) {
+  if (!existing) {
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        password: hashedPassword,
+        name: 'Admin',
+        role: 'ADMIN',
+      },
+    });
+    console.log('Admin user created (admin@example.com / admin123)');
+  } else {
     console.log('Admin user already exists');
-    await app.close();
-    return;
   }
 
-  const hashedPassword = await bcrypt.hash('admin123', 10);
-  await prisma.user.create({
-    data: {
-      email: adminEmail,
-      password: hashedPassword,
-      name: 'Admin',
-      role: 'ADMIN',
-    },
+  const insideZone = await prisma.deliveryCharge.findUnique({
+    where: { zone: 'INSIDE_DHAKA' },
   });
+  if (!insideZone) {
+    await prisma.deliveryCharge.create({
+      data: { zone: 'INSIDE_DHAKA', charge: 60, minOrder: 500 },
+    });
+    console.log('Delivery charge for INSIDE_DHAKA created (৳60, free above ৳500)');
+  }
 
-  console.log('Admin user created (admin@example.com / admin123)');
+  const outsideZone = await prisma.deliveryCharge.findUnique({
+    where: { zone: 'OUTSIDE_DHAKA' },
+  });
+  if (!outsideZone) {
+    await prisma.deliveryCharge.create({
+      data: { zone: 'OUTSIDE_DHAKA', charge: 120, minOrder: 1000 },
+    });
+    console.log('Delivery charge for OUTSIDE_DHAKA created (৳120, free above ৳1000)');
+  }
+
   await app.close();
 }
 

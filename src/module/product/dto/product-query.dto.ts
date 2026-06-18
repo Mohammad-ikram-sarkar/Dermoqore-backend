@@ -7,6 +7,7 @@ export enum ProductSortDto {
   PRICE_ASC = 'priceAsc',
   PRICE_DESC = 'priceDesc',
   NEWEST = 'newest',
+  BEST_SELLER = 'bestSeller',
 }
 
 export class ProductQueryDto {

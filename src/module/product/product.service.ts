@@ -29,6 +29,10 @@ export class ProductService {
     return this.productRepository.findAll();
   }
 
+  async findBestSellers(limit = 8) {
+    return this.productRepository.findBestSellers(limit);
+  }
+
   async findOne(id: string) {
     const product =
       (await this.productRepository.findById(id)) ??

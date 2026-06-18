@@ -27,6 +27,7 @@ model Product {
   benefits          ProductBenefit[]
 
   seo               ProductSEO?
+  orderItems        OrderItem[]
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

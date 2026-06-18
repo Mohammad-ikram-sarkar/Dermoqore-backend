@@ -1,0 +1,25 @@
+model Blog {
+  id            String     @id @default(cuid())
+  title         String
+  slug          String     @unique
+  excerpt       String?
+  content       Json
+  featuredImage String?
+  status        BlogStatus @default(DRAFT)
+  featured      Boolean    @default(false)
+
+  categoryId    String
+  category      Category   @relation(fields: [categoryId], references: [id])
+
+  authorId      String
+  author        User       @relation(fields: [authorId], references: [id])
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([status])
+  @@index([featured])
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([createdAt])
+}

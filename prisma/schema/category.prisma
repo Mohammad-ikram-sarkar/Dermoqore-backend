@@ -10,6 +10,8 @@ model Category {
   banners   Banner[]
   products  Product[]
 
+  blogs Blog[]
+
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 
