@@ -66,11 +66,7 @@ export class OrderRepository {
 
   // ── Order ──────────────────────────────────────────────
 
-  async findOrdersByUser(
-    userId: string,
-    page: number,
-    limit: number,
-  ) {
+  async findOrdersByUser(userId: string, page: number, limit: number) {
     const skip = (page - 1) * limit;
     const [items, total] = await Promise.all([
       this.prisma.order.findMany({
@@ -105,7 +101,10 @@ export class OrderRepository {
     const [items, total] = await Promise.all([
       this.prisma.order.findMany({
         where,
-        include: { items: true, user: { select: { id: true, name: true, email: true } } },
+        include: {
+          items: true,
+          user: { select: { id: true, name: true, email: true } },
+        },
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
@@ -124,7 +123,14 @@ export class OrderRepository {
     notes?: string;
     deliveryZone: string;
     shippingAddressId: string;
-    items: { productId: string; name: string; image?: string; quantity: number; unitPrice: number; totalPrice: number }[];
+    items: {
+      productId: string;
+      name: string;
+      image?: string;
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+    }[];
   }) {
     return this.prisma.order.create({
       data: {
@@ -145,7 +151,11 @@ export class OrderRepository {
     });
   }
 
-  async updateOrderStatus(id: string, status: string, extra?: Record<string, Date>) {
+  async updateOrderStatus(
+    id: string,
+    status: string,
+    extra?: Record<string, Date>,
+  ) {
     return this.prisma.order.update({
       where: { id },
       data: {

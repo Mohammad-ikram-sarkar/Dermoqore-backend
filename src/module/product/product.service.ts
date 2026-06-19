@@ -44,8 +44,7 @@ export class ProductService {
   }
 
   async create(dto: CreateProductDto) {
-    const slug =
-      dto.slug ?? dto.name.toLowerCase().replace(/\s+/g, '-');
+    const slug = dto.slug ?? dto.name.toLowerCase().replace(/\s+/g, '-');
     const existing = await this.productRepository.findBySlug(slug);
     if (existing) {
       throw new ConflictException('Product slug already exists');

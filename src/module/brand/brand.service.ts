@@ -24,8 +24,7 @@ export class BrandService {
   }
 
   async create(dto: CreateBrandDto) {
-    const slug =
-      dto.slug ?? dto.name.toLowerCase().replace(/\s+/g, '-');
+    const slug = dto.slug ?? dto.name.toLowerCase().replace(/\s+/g, '-');
     const existing = await this.brandRepository.findBySlug(slug);
     if (existing) {
       throw new ConflictException('Brand slug already exists');

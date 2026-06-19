@@ -59,7 +59,7 @@ export class OrderService {
     await this.orderRepository.unsetDefaultAddresses(userId);
     return this.orderRepository.updateAddress(id, userId, {
       isDefault: true,
-    } as any);
+    });
   }
 
   // ── Order Placement ────────────────────────────────────
@@ -189,9 +189,7 @@ export class OrderService {
       throw new NotFoundException('Order not found');
     }
     if (order.status !== 'PENDING') {
-      throw new BadRequestException(
-        'Only pending orders can be cancelled',
-      );
+      throw new BadRequestException('Only pending orders can be cancelled');
     }
     return this.orderRepository.updateOrderStatus(id, 'CANCELLED', {
       cancelledAt: new Date(),
@@ -236,10 +234,7 @@ export class OrderService {
 
   private generateOrderNumber(): string {
     const date = new Date();
-    const yymmdd = date
-      .toISOString()
-      .slice(2, 10)
-      .replace(/-/g, '');
+    const yymmdd = date.toISOString().slice(2, 10).replace(/-/g, '');
     const rand = randomBytes(3).toString('hex').toUpperCase();
     return `DRM-${yymmdd}-${rand}`;
   }

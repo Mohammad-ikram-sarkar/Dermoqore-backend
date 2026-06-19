@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { BannerRepository } from './banner.repository';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { CreateBannerDto } from './dto/create-banner.dto';
@@ -55,7 +59,10 @@ export class BannerService {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
-    const imageUrl = await this.cloudinaryService.uploadImage(file, 'admin/banner');
+    const imageUrl = await this.cloudinaryService.uploadImage(
+      file,
+      'admin/banner',
+    );
     return this.bannerRepository.updateImage(id, imageUrl);
   }
 }

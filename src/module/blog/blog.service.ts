@@ -43,7 +43,9 @@ export class BlogService {
   }
 
   async create(dto: CreateBlogDto, authorId: string) {
-    const categoryExists = await this.blogRepository.checkCategoryExists(dto.categoryId);
+    const categoryExists = await this.blogRepository.checkCategoryExists(
+      dto.categoryId,
+    );
     if (!categoryExists) {
       throw new BadRequestException('Category not found');
     }
@@ -51,7 +53,12 @@ export class BlogService {
     return this.blogRepository.create(dto, authorId);
   }
 
-  async update(id: string, dto: UpdateBlogDto, userId: string, userRole: string) {
+  async update(
+    id: string,
+    dto: UpdateBlogDto,
+    userId: string,
+    userRole: string,
+  ) {
     const blog = await this.blogRepository.findById(id);
     if (!blog) {
       throw new NotFoundException('Blog not found');
@@ -62,7 +69,9 @@ export class BlogService {
     }
 
     if (dto.categoryId) {
-      const categoryExists = await this.blogRepository.checkCategoryExists(dto.categoryId);
+      const categoryExists = await this.blogRepository.checkCategoryExists(
+        dto.categoryId,
+      );
       if (!categoryExists) {
         throw new BadRequestException('Category not found');
       }
@@ -104,7 +113,10 @@ export class BlogService {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
-    const imageUrl = await this.cloudinaryService.uploadImage(file, 'admin/blog');
+    const imageUrl = await this.cloudinaryService.uploadImage(
+      file,
+      'admin/blog',
+    );
     return this.blogRepository.updateImage(id, imageUrl);
   }
 

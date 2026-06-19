@@ -57,7 +57,11 @@ export class BlogController {
     @Query('categoryId') categoryId: string,
     @Query('limit') limit?: string,
   ) {
-    return this.blogService.findRelated(id, categoryId, limit ? parseInt(limit) : 3);
+    return this.blogService.findRelated(
+      id,
+      categoryId,
+      limit ? parseInt(limit) : 3,
+    );
   }
 
   @Post()
@@ -92,7 +96,11 @@ export class BlogController {
   @Put('admin/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  adminUpdate(@Param('id') id: string, @Body() dto: UpdateBlogDto, @GetUser() user: any) {
+  adminUpdate(
+    @Param('id') id: string,
+    @Body() dto: UpdateBlogDto,
+    @GetUser() user: any,
+  ) {
     return this.blogService.update(id, dto, user.id, user.role);
   }
 
@@ -115,7 +123,10 @@ export class BlogController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
   @UseInterceptors(FileInterceptor('file'))
-  uploadImage(@Param('id') id: string, @UploadedFile() file: Express.Multer.File) {
+  uploadImage(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     return this.blogService.uploadImage(id, file);
   }
 

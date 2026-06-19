@@ -14,6 +14,7 @@ import { ClientModule } from './module/client/client.module';
 import { BrandModule } from './module/brand/brand.module';
 import { ProductModule } from './module/product/product.module';
 import { DeliveryModule } from './module/delivery/delivery.module';
+import { AnnouncementBarModule } from './module/announcement-bar/announcement-bar.module';
 import { OrderModule } from './module/order/order.module';
 import { envConfig } from './config/env.config';
 
@@ -32,6 +33,7 @@ import { envConfig } from './config/env.config';
     BrandModule,
     ProductModule,
     DeliveryModule,
+    AnnouncementBarModule,
     OrderModule,
   ],
   controllers: [AppController],

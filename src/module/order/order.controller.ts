@@ -33,10 +33,7 @@ export class OrderController {
 
   @Post('address')
   @UseGuards(JwtAuthGuard)
-  createAddress(
-    @GetUser('id') userId: string,
-    @Body() dto: CreateAddressDto,
-  ) {
+  createAddress(@GetUser('id') userId: string, @Body() dto: CreateAddressDto) {
     return this.orderService.createAddress(userId, dto);
   }
 
@@ -52,19 +49,13 @@ export class OrderController {
 
   @Delete('address/:id')
   @UseGuards(JwtAuthGuard)
-  deleteAddress(
-    @GetUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  deleteAddress(@GetUser('id') userId: string, @Param('id') id: string) {
     return this.orderService.deleteAddress(id, userId);
   }
 
   @Put('address/:id/default')
   @UseGuards(JwtAuthGuard)
-  setDefaultAddress(
-    @GetUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  setDefaultAddress(@GetUser('id') userId: string, @Param('id') id: string) {
     return this.orderService.setDefaultAddress(id, userId);
   }
 
@@ -104,10 +95,7 @@ export class OrderController {
   @Get('admin/inside-dhaka')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  insideDhaka(
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
+  insideDhaka(@Query('page') page?: string, @Query('limit') limit?: string) {
     return this.orderService.findByZone(
       'INSIDE_DHAKA',
       page ? parseInt(page, 10) : 1,
@@ -118,10 +106,7 @@ export class OrderController {
   @Get('admin/outside-dhaka')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  outsideDhaka(
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
+  outsideDhaka(@Query('page') page?: string, @Query('limit') limit?: string) {
     return this.orderService.findByZone(
       'OUTSIDE_DHAKA',
       page ? parseInt(page, 10) : 1,
@@ -139,10 +124,7 @@ export class OrderController {
   @Put('admin/:id/status')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  updateStatus(
-    @Param('id') id: string,
-    @Body() dto: UpdateOrderStatusDto,
-  ) {
+  updateStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
     return this.orderService.updateStatus(id, dto);
   }
 
@@ -154,20 +136,13 @@ export class OrderController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  placeOrder(
-    @GetUser('id') userId: string,
-    @Body() dto: PlaceOrderDto,
-  ) {
+  placeOrder(@GetUser('id') userId: string, @Body() dto: PlaceOrderDto) {
     return this.orderService.placeOrder(userId, dto);
   }
 
   @Put(':id/cancel')
   @UseGuards(JwtAuthGuard)
-  cancelOrder(
-    @GetUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
+  cancelOrder(@GetUser('id') userId: string, @Param('id') id: string) {
     return this.orderService.cancelMyOrder(id, userId);
   }
-
 }

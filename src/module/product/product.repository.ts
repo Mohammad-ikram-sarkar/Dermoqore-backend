@@ -41,7 +41,9 @@ export class ProductRepository {
               mode: 'insensitive' as const,
             },
           },
-          { skinType: { contains: query.search, mode: 'insensitive' as const } },
+          {
+            skinType: { contains: query.search, mode: 'insensitive' as const },
+          },
         ],
       }),
       ...(query.categoryId && { categoryId: query.categoryId }),
@@ -253,9 +255,7 @@ export class ProductRepository {
           },
         }),
         ...(dto.seo !== undefined &&
-          (dto.seo.metaTitle ||
-          dto.seo.metaDescription ||
-          dto.seo.metaKeyword
+          (dto.seo.metaTitle || dto.seo.metaDescription || dto.seo.metaKeyword
             ? {
                 seo: {
                   upsert: {
@@ -284,7 +284,12 @@ export class ProductRepository {
 
   async addImage(
     productId: string,
-    data: { url: string; alt?: string; isPrimary?: boolean; sortOrder?: number },
+    data: {
+      url: string;
+      alt?: string;
+      isPrimary?: boolean;
+      sortOrder?: number;
+    },
   ) {
     if (data.isPrimary) {
       await this.prisma.productImage.updateMany({

@@ -34,7 +34,9 @@ async function bootstrap() {
     await prisma.deliveryCharge.create({
       data: { zone: 'INSIDE_DHAKA', charge: 60, minOrder: 500 },
     });
-    console.log('Delivery charge for INSIDE_DHAKA created (৳60, free above ৳500)');
+    console.log(
+      'Delivery charge for INSIDE_DHAKA created (৳60, free above ৳500)',
+    );
   }
 
   const outsideZone = await prisma.deliveryCharge.findUnique({
@@ -44,7 +46,9 @@ async function bootstrap() {
     await prisma.deliveryCharge.create({
       data: { zone: 'OUTSIDE_DHAKA', charge: 120, minOrder: 1000 },
     });
-    console.log('Delivery charge for OUTSIDE_DHAKA created (৳120, free above ৳1000)');
+    console.log(
+      'Delivery charge for OUTSIDE_DHAKA created (৳120, free above ৳1000)',
+    );
   }
 
   await app.close();

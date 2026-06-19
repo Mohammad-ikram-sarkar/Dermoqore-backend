@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsNotEmpty, IsBoolean, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsNotEmpty,
+  IsBoolean,
+  IsEnum,
+} from 'class-validator';
 import { BlogStatus } from '../../../@generated/prisma/enums';
 
 export class CreateBlogDto {

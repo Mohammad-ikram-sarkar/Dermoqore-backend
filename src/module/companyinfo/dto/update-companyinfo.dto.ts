@@ -20,5 +20,4 @@ export class UpdateCompanyInfoDto {
   @IsEmail()
   @IsOptional()
   email?: string;
-
 }

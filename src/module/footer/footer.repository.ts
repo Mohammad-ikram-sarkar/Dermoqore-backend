@@ -39,16 +39,12 @@ export class FooterRepository {
         email: dto.email,
         address: dto.address,
         copyright: dto.copyright,
-        socialLinks: dto.socialLinks
-          ? { create: dto.socialLinks }
-          : undefined,
+        socialLinks: dto.socialLinks ? { create: dto.socialLinks } : undefined,
         sections: dto.sections
           ? {
               create: dto.sections.map((section) => ({
                 title: section.title,
-                links: section.links
-                  ? { create: section.links }
-                  : undefined,
+                links: section.links ? { create: section.links } : undefined,
               })),
             }
           : undefined,

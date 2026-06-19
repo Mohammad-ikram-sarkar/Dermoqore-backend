@@ -26,7 +26,12 @@ export class AuthService {
     const token = this.generateToken(user);
 
     return {
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
       token,
     };
   }
@@ -45,7 +50,12 @@ export class AuthService {
     const token = this.generateToken(user);
 
     return {
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
       token,
     };
   }
@@ -68,7 +78,12 @@ export class AuthService {
     const token = this.generateToken(user);
 
     return {
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
       token,
     };
   }
