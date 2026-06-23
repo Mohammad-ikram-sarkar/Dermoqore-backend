@@ -1,0 +1,98 @@
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  ENDED
+}
+
+enum CampaignOrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Campaign {
+  id            String         @id @default(cuid())
+  slug          String         @unique
+  title         String
+  subtitle      String?
+
+  productId     String
+  product       Product        @relation(fields: [productId], references: [id])
+
+  heroImages    CampaignImage[]
+
+  videoUrl      String?
+  videoTitle    String?
+
+  // Campaign-specific pricing (may differ from product's regular price)
+  campaignPrice Decimal?       @db.Decimal(10, 2)
+  comparePrice  Decimal?       @db.Decimal(10, 2)
+
+  // Flexible JSON content sections
+  whySections   Json?          // [{ heading: string; items: string[] }]
+  benefits      Json?          // string[]
+  testimonials  Json?          // [{ name: string; location?: string; text: string }]
+  included      Json?          // string[]
+
+  // CTA / Offer
+  offerBadge    String?
+  ctaText       String?
+  phoneNumber   String?
+
+  // Order form
+  formTitle     String?
+
+  status        CampaignStatus @default(DRAFT)
+  orders        CampaignOrder[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([slug])
+}
+
+model CampaignImage {
+  id         String   @id @default(cuid())
+  campaignId String
+  url        String
+  alt        String?
+  sortOrder  Int      @default(0)
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+}
+
+model CampaignOrder {
+  id              String              @id @default(cuid())
+  orderNumber     String              @unique
+
+  campaignId      String
+  campaign        Campaign            @relation(fields: [campaignId], references: [id])
+
+  productId       String
+  product         Product             @relation("CampaignOrderProduct", fields: [productId], references: [id])
+
+  // Guest customer details (no account required)
+  customerName    String
+  customerPhone   String
+  customerAddress String
+  deliveryZone    DeliveryZone        @default(OUTSIDE_DHAKA)
+
+  quantity        Int
+  unitPrice       Decimal             @db.Decimal(10, 2)
+  shippingCharge  Decimal             @db.Decimal(10, 2) @default(0)
+  total           Decimal             @db.Decimal(10, 2)
+
+  status          CampaignOrderStatus @default(PENDING)
+  notes           String?
+
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([campaignId])
+  @@index([orderNumber])
+}

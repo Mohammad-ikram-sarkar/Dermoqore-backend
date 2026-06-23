@@ -7,6 +7,7 @@ import {
 import { OrderRepository } from './order.repository';
 import { PrismaService } from '../../database/prisma.service';
 import { PlaceOrderDto } from './dto/place-order.dto';
+import { PlaceGuestOrderDto } from './dto/place-guest-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
@@ -167,6 +168,84 @@ export class OrderService {
     });
 
     return order;
+  }
+
+  async placeGuestOrder(dto: PlaceGuestOrderDto) {
+    const productIds = dto.items.map((i) => i.productId);
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: productIds } },
+      include: { images: { where: { isPrimary: true }, take: 1 } },
+    });
+
+    if (products.length !== productIds.length) {
+      throw new BadRequestException('One or more products not found');
+    }
+
+    const productMap = new Map(products.map((p) => [p.id, p]));
+
+    for (const item of dto.items) {
+      const product = productMap.get(item.productId)!;
+      if (product.stock < item.quantity) {
+        throw new BadRequestException(
+          `Insufficient stock for "${product.name}". Available: ${product.stock}`,
+        );
+      }
+    }
+
+    let subtotal = 0;
+    const orderItems: {
+      productId: string;
+      name: string;
+      image: string | undefined;
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+    }[] = [];
+
+    for (const item of dto.items) {
+      const product = productMap.get(item.productId)!;
+      const unitPrice = Number(product.price);
+      const totalPrice = unitPrice * item.quantity;
+      subtotal += totalPrice;
+      orderItems.push({
+        productId: item.productId,
+        name: product.name,
+        image: product.images[0]?.url,
+        quantity: item.quantity,
+        unitPrice,
+        totalPrice,
+      });
+    }
+
+    const shippingCharge = dto.deliveryZone === 'INSIDE_DHAKA' ? 60 : 120;
+    const total = subtotal + shippingCharge;
+    const orderNumber = this.generateOrderNumber();
+
+    return this.prisma.client_.$transaction(async (tx) => {
+      for (const item of dto.items) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: { stock: { decrement: item.quantity } },
+        });
+      }
+
+      return tx.order.create({
+        data: {
+          orderNumber,
+          subtotal,
+          shippingCharge,
+          discount: 0,
+          total,
+          notes: dto.notes,
+          deliveryZone: dto.deliveryZone as any,
+          recipientName: dto.customerName,
+          recipientPhone: dto.customerPhone,
+          recipientAddress: dto.customerAddress,
+          items: { create: orderItems },
+        },
+        include: { items: true },
+      });
+    });
   }
 
   // ── Order Queries ──────────────────────────────────────

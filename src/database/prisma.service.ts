@@ -104,6 +104,21 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     return this._prisma.orderItem;
   }
 
+  get campaign() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this._prisma.campaign as any;
+  }
+
+  get campaignImage() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this._prisma.campaignImage as any;
+  }
+
+  get campaignOrder() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this._prisma.campaignOrder as any;
+  }
+
   get client_() {
     return this._prisma;
   }

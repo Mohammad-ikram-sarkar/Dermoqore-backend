@@ -28,6 +28,8 @@ model Product {
 
   seo               ProductSEO?
   orderItems        OrderItem[]
+  campaigns         Campaign[]
+  campaignOrders    CampaignOrder[] @relation("CampaignOrderProduct")
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

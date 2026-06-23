@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { PlaceOrderDto } from './dto/place-order.dto';
+import { PlaceGuestOrderDto } from './dto/place-guest-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
@@ -132,6 +133,11 @@ export class OrderController {
   @UseGuards(JwtAuthGuard)
   myOrder(@GetUser('id') userId: string, @Param('id') id: string) {
     return this.orderService.getMyOrder(id, userId);
+  }
+
+  @Post('guest')
+  placeGuestOrder(@Body() dto: PlaceGuestOrderDto) {
+    return this.orderService.placeGuestOrder(dto);
   }
 
   @Post()

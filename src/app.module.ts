@@ -16,6 +16,7 @@ import { ProductModule } from './module/product/product.module';
 import { DeliveryModule } from './module/delivery/delivery.module';
 import { AnnouncementBarModule } from './module/announcement-bar/announcement-bar.module';
 import { OrderModule } from './module/order/order.module';
+import { CampaignModule } from './module/campaign/campaign.module';
 import { envConfig } from './config/env.config';
 
 @Module({
@@ -35,6 +36,7 @@ import { envConfig } from './config/env.config';
     DeliveryModule,
     AnnouncementBarModule,
     OrderModule,
+    CampaignModule,
   ],
   controllers: [AppController],
   providers: [AppService],

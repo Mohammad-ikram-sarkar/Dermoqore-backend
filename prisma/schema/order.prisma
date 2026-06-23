@@ -33,7 +33,7 @@ model Address {
 model Order {
   id                String       @id @default(cuid())
   orderNumber       String       @unique
-  userId            String
+  userId            String?
   status            OrderStatus  @default(PENDING)
   subtotal          Decimal      @db.Decimal(10, 2)
   shippingCharge    Decimal      @db.Decimal(10, 2) @default(0)
@@ -45,7 +45,12 @@ model Order {
   shippingAddressId String?
   shippingAddress   Address?     @relation("ShippingAddress", fields: [shippingAddressId], references: [id])
 
-  user              User         @relation(fields: [userId], references: [id])
+  // Guest checkout fields (used when userId is null)
+  recipientName     String?
+  recipientPhone    String?
+  recipientAddress  String?
+
+  user              User?        @relation(fields: [userId], references: [id])
   items             OrderItem[]
 
   paidAt            DateTime?
