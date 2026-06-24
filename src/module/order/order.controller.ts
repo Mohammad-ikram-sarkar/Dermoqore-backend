@@ -85,11 +85,15 @@ export class OrderController {
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Query('zone') zone?: string,
+    @Query('status') status?: string,
+    @Query('phone') phone?: string,
   ) {
     return this.orderService.findAll(
       page ? parseInt(page, 10) : 1,
       limit ? parseInt(limit, 10) : 20,
       zone,
+      status,
+      phone,
     );
   }
 

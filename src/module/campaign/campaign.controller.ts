@@ -58,8 +58,13 @@ export class CampaignController {
   @Get('admin/orders')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  getAllOrders(@Query('page') page?: string, @Query('limit') limit?: string) {
-    return this.campaignService.getAllOrders(page, limit);
+  getAllOrders(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('status') status?: string,
+    @Query('phone') phone?: string,
+  ) {
+    return this.campaignService.getAllOrders(page, limit, status, phone);
   }
 
   @Get('admin/:id/orders')
@@ -102,6 +107,13 @@ export class CampaignController {
     @Body() body: { url: string; alt?: string; sortOrder?: number },
   ) {
     return this.campaignService.addImage(id, body);
+  }
+
+  @Get('admin/orders/:orderId')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  getOrderById(@Param('orderId') orderId: string) {
+    return this.campaignService.getOrderById(orderId);
   }
 
   @Put('admin/orders/:orderId/status')

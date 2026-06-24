@@ -95,15 +95,22 @@ export class OrderRepository {
     });
   }
 
-  async findAllOrders(page: number, limit: number, zone?: string) {
+  async findAllOrders(page: number, limit: number, zone?: string, status?: string, phone?: string) {
     const skip = (page - 1) * limit;
-    const where = zone ? { deliveryZone: zone as any } : {};
+    const where: any = {};
+    if (zone) where.deliveryZone = zone;
+    if (status) where.status = status;
+    if (phone) where.OR = [
+      { recipientPhone: { contains: phone } },
+      { shippingAddress: { phone: { contains: phone } } },
+    ];
     const [items, total] = await Promise.all([
       this.prisma.order.findMany({
         where,
         include: {
           items: true,
           user: { select: { id: true, name: true, email: true } },
+          shippingAddress: true,
         },
         orderBy: { createdAt: 'desc' },
         skip,

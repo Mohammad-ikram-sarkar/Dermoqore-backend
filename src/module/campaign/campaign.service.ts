@@ -90,8 +90,19 @@ export class CampaignService {
     return this.repo.findOrders(campaignId, page ? parseInt(page, 10) : 1, limit ? parseInt(limit, 10) : 20);
   }
 
-  async getAllOrders(page?: string, limit?: string) {
-    return this.repo.findAllOrders(page ? parseInt(page, 10) : 1, limit ? parseInt(limit, 10) : 20);
+  async getOrderById(orderId: string) {
+    const order = await this.repo.findOrderById(orderId);
+    if (!order) throw new NotFoundException('Order not found');
+    return order;
+  }
+
+  async getAllOrders(page?: string, limit?: string, status?: string, phone?: string) {
+    return this.repo.findAllOrders(
+      page ? parseInt(page, 10) : 1,
+      limit ? parseInt(limit, 10) : 20,
+      status,
+      phone,
+    );
   }
 
   async updateOrderStatus(orderId: string, status: string) {

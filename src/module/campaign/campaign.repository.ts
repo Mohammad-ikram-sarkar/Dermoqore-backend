@@ -177,16 +177,20 @@ export class CampaignRepository {
     };
   }
 
-  async findAllOrders(page = 1, limit = 20) {
+  async findAllOrders(page = 1, limit = 20, status?: string, phone?: string) {
     const skip = (page - 1) * limit;
+    const where: any = {};
+    if (status) where.status = status;
+    if (phone) where.customerPhone = { contains: phone };
     const [items, total] = await Promise.all([
       this.prisma.campaignOrder.findMany({
+        where,
         include: { campaign: { select: { title: true, slug: true } } },
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
       }),
-      this.prisma.campaignOrder.count(),
+      this.prisma.campaignOrder.count({ where }),
     ]);
     return {
       items,
@@ -194,10 +198,18 @@ export class CampaignRepository {
     };
   }
 
+  async findOrderById(orderId: string) {
+    return this.prisma.campaignOrder.findUnique({
+      where: { id: orderId },
+      include: { campaign: { select: { title: true, slug: true } } },
+    });
+  }
+
   async updateOrderStatus(orderId: string, status: string) {
     return this.prisma.campaignOrder.update({
       where: { id: orderId },
       data: { status: status as any },
+      include: { campaign: { select: { title: true, slug: true } } },
     });
   }
 }

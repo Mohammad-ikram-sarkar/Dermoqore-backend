@@ -277,8 +277,8 @@ export class OrderService {
 
   // ── Admin ──────────────────────────────────────────────
 
-  async findAll(page = 1, limit = 20, zone?: string) {
-    return this.orderRepository.findAllOrders(page, limit, zone);
+  async findAll(page = 1, limit = 20, zone?: string, status?: string, phone?: string) {
+    return this.orderRepository.findAllOrders(page, limit, zone, status, phone);
   }
 
   async findByZone(zone: string, page = 1, limit = 20) {
