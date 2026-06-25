@@ -16,6 +16,7 @@ import {
   TestimonialDto,
   FeatureDto,
   IngredientDto,
+  FaqItemDto,
 } from './create-campaign.dto';
 
 export class UpdateCampaignDto {
@@ -86,6 +87,12 @@ export class UpdateCampaignDto {
   @Type(() => IngredientDto)
   @IsOptional()
   ingredients?: IngredientDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FaqItemDto)
+  @IsOptional()
+  faqs?: FaqItemDto[];
 
   @IsEnum(CampaignThemeDto)
   @IsOptional()

@@ -12,6 +12,7 @@ const campaignInclude = {
     },
   },
   heroImages: { orderBy: { sortOrder: 'asc' as const } },
+  faqs: { orderBy: { sortOrder: 'asc' as const } },
 };
 
 @Injectable()
@@ -79,6 +80,15 @@ export class CampaignRepository {
             })),
           },
         }),
+        ...(dto.faqs?.length && {
+          faqs: {
+            create: dto.faqs.map((faq, i) => ({
+              question: faq.question,
+              answer: faq.answer,
+              sortOrder: faq.sortOrder ?? i,
+            })),
+          },
+        }),
       },
       include: campaignInclude,
     });
@@ -115,6 +125,16 @@ export class CampaignRepository {
               url: img.url,
               alt: img.alt,
               sortOrder: img.sortOrder ?? i,
+            })),
+          },
+        }),
+        ...(dto.faqs !== undefined && {
+          faqs: {
+            deleteMany: {},
+            create: dto.faqs.map((faq, i) => ({
+              question: faq.question,
+              answer: faq.answer,
+              sortOrder: faq.sortOrder ?? i,
             })),
           },
         }),

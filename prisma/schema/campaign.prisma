@@ -47,6 +47,9 @@ model Campaign {
   features      Json?          // [{ title: string; description: string; icon: string }]
   ingredients   Json?          // [{ name: string; image: string; description: string }]
 
+  // Dedicated FAQ items (question + answer pairs)
+  faqs          CampaignFaq[]
+
   // Theme — controls the landing page color palette
   theme         CampaignTheme  @default(DEFAULT)
 
@@ -77,6 +80,15 @@ model CampaignImage {
   campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
   createdAt  DateTime @default(now())
+}
+
+model CampaignFaq {
+  id         String   @id @default(cuid())
+  campaignId String
+  question   String
+  answer     String
+  sortOrder  Int      @default(0)
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 }
 
 model CampaignOrder {

@@ -7,6 +7,7 @@ let PrismaClientClass: typeof PrismaClient | null = null;
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {
   private _prisma!: PrismaClient;
+  private _pool: import('pg').Pool | null = null;
 
   async onModuleInit() {
     if (!PrismaClientClass) {
@@ -15,9 +16,22 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     }
 
     const { Pool } = await import('pg');
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-    const adapter = new PrismaPg(pool);
 
+    // Strip unsupported params (channel_binding) and fix SSL for Neon / pg compatibility
+    const rawUrl = process.env.DATABASE_URL ?? '';
+    const url = new URL(rawUrl);
+    url.searchParams.delete('channel_binding');
+    url.searchParams.set('sslmode', 'require');
+
+    this._pool = new Pool({
+      connectionString: url.toString(),
+      ssl: { rejectUnauthorized: false },
+      max: 10,
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
+    });
+
+    const adapter = new PrismaPg(this._pool);
     this._prisma = new PrismaClientClass({ adapter });
     await this._prisma.$connect();
   }
@@ -25,6 +39,9 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   async onModuleDestroy() {
     if (this._prisma) {
       await this._prisma.$disconnect();
+    }
+    if (this._pool) {
+      await this._pool.end();
     }
   }
 
@@ -117,6 +134,11 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   get campaignOrder() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this._prisma.campaignOrder as any;
+  }
+
+  get campaignFaq() {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return this._prisma.campaignFaq as any;
   }
 
   get client_() {

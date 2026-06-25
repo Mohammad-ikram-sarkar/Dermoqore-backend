@@ -96,6 +96,21 @@ export class IngredientDto {
   description: string;
 }
 
+export class FaqItemDto {
+  @IsString()
+  @IsNotEmpty()
+  question: string;
+
+  @IsString()
+  @IsNotEmpty()
+  answer: string;
+
+  @IsNumber()
+  @Min(0)
+  @IsOptional()
+  sortOrder?: number;
+}
+
 export class CreateCampaignDto {
   @IsString()
   @IsNotEmpty()
@@ -164,6 +179,12 @@ export class CreateCampaignDto {
   @Type(() => IngredientDto)
   @IsOptional()
   ingredients?: IngredientDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FaqItemDto)
+  @IsOptional()
+  faqs?: FaqItemDto[];
 
   @IsEnum(CampaignThemeDto)
   @IsOptional()
