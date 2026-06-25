@@ -31,6 +31,14 @@ export enum CampaignStatusDto {
   ENDED = 'ENDED',
 }
 
+export enum CampaignThemeDto {
+  DEFAULT = 'DEFAULT',
+  EMERALD = 'EMERALD',
+  ROSE = 'ROSE',
+  OCEAN = 'OCEAN',
+  AMBER = 'AMBER',
+}
+
 export enum DeliveryZoneDto {
   INSIDE_DHAKA = 'INSIDE_DHAKA',
   OUTSIDE_DHAKA = 'OUTSIDE_DHAKA',
@@ -58,6 +66,34 @@ export class TestimonialDto {
   @IsString()
   @IsNotEmpty()
   text: string;
+}
+
+export class FeatureDto {
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  icon: string;
+}
+
+export class IngredientDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  image: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
 }
 
 export class CreateCampaignDto {
@@ -116,6 +152,22 @@ export class CreateCampaignDto {
   @IsString({ each: true })
   @IsOptional()
   included?: string[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FeatureDto)
+  @IsOptional()
+  features?: FeatureDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => IngredientDto)
+  @IsOptional()
+  ingredients?: IngredientDto[];
+
+  @IsEnum(CampaignThemeDto)
+  @IsOptional()
+  theme?: CampaignThemeDto;
 
   @IsString()
   @IsOptional()

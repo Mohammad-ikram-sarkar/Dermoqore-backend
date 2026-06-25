@@ -8,7 +8,15 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { CampaignStatusDto, CampaignImageInputDto, WhySectionDto, TestimonialDto } from './create-campaign.dto';
+import {
+  CampaignStatusDto,
+  CampaignThemeDto,
+  CampaignImageInputDto,
+  WhySectionDto,
+  TestimonialDto,
+  FeatureDto,
+  IngredientDto,
+} from './create-campaign.dto';
 
 export class UpdateCampaignDto {
   @IsString()
@@ -66,6 +74,22 @@ export class UpdateCampaignDto {
   @IsString({ each: true })
   @IsOptional()
   included?: string[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FeatureDto)
+  @IsOptional()
+  features?: FeatureDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => IngredientDto)
+  @IsOptional()
+  ingredients?: IngredientDto[];
+
+  @IsEnum(CampaignThemeDto)
+  @IsOptional()
+  theme?: CampaignThemeDto;
 
   @IsString()
   @IsOptional()

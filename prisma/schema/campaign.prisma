@@ -4,6 +4,14 @@ enum CampaignStatus {
   ENDED
 }
 
+enum CampaignTheme {
+  DEFAULT
+  EMERALD
+  ROSE
+  OCEAN
+  AMBER
+}
+
 enum CampaignOrderStatus {
   PENDING
   CONFIRMED
@@ -36,6 +44,11 @@ model Campaign {
   benefits      Json?          // string[]
   testimonials  Json?          // [{ name: string; location?: string; text: string }]
   included      Json?          // string[]
+  features      Json?          // [{ title: string; description: string; icon: string }]
+  ingredients   Json?          // [{ name: string; image: string; description: string }]
+
+  // Theme — controls the landing page color palette
+  theme         CampaignTheme  @default(DEFAULT)
 
   // CTA / Offer
   offerBadge    String?
