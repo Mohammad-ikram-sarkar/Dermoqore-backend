@@ -78,6 +78,14 @@ export class CustomerReviewDto {
   title?: string;
 
   @IsString()
+  @IsOptional()
+  videoTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  videoDescription?: string;
+
+  @IsString()
   @IsNotEmpty()
   videoUrl: string;
 }
@@ -149,6 +157,14 @@ export class CreateCampaignDto {
   @IsString()
   @IsOptional()
   videoTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  productVideoUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  productVideoTitle?: string;
 
   @IsNumber()
   @Min(0)

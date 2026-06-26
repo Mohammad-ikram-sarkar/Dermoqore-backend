@@ -45,6 +45,14 @@ export class UpdateCampaignDto {
   @IsOptional()
   videoTitle?: string;
 
+  @IsString()
+  @IsOptional()
+  productVideoUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  productVideoTitle?: string;
+
   @IsNumber()
   @Min(0)
   @IsOptional()

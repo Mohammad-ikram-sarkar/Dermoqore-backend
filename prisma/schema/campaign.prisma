@@ -35,6 +35,9 @@ model Campaign {
   videoUrl      String?
   videoTitle    String?
 
+  productVideoUrl   String?
+  productVideoTitle String?
+
   // Campaign-specific pricing (may differ from product's regular price)
   campaignPrice Decimal?       @db.Decimal(10, 2)
   comparePrice  Decimal?       @db.Decimal(10, 2)
@@ -43,7 +46,7 @@ model Campaign {
   whySections   Json?          // [{ heading: string; items: string[] }]
   benefits      Json?          // string[]
   testimonials  Json?          // [{ name: string; location?: string; text: string }]
-  customerReviews Json?        // [{ name: string; title?: string; videoUrl: string }]
+  customerReviews Json?        // [{ name: string; title?: string; videoTitle?: string; videoDescription?: string; videoUrl: string }]
   included      Json?          // string[]
   features      Json?          // [{ title: string; description: string; icon: string }]
   ingredients   Json?          // [{ name: string; image: string; description: string }]
