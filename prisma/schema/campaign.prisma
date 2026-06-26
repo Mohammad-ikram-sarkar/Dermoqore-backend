@@ -43,9 +43,17 @@ model Campaign {
   whySections   Json?          // [{ heading: string; items: string[] }]
   benefits      Json?          // string[]
   testimonials  Json?          // [{ name: string; location?: string; text: string }]
+  customerReviews Json?        // [{ name: string; title?: string; videoUrl: string }]
   included      Json?          // string[]
   features      Json?          // [{ title: string; description: string; icon: string }]
   ingredients   Json?          // [{ name: string; image: string; description: string }]
+
+  // BTRI Lab Test Report section
+  labReportTitle       String?        // e.g. "BTRI Lab Test Report"
+  labReportDescription String?        // e.g. "Dermoqore Spot Correcting Serum BTRI কর্তৃক..."
+  labReportButtonText  String?        // e.g. "সম্পূর্ণ রিপোর্ট দেখুন"
+  labReportButtonUrl   String?        // link to full report PDF or page
+  labReportImages      Json?          // string[] — up to 3 document image URLs
 
   // Dedicated FAQ items (question + answer pairs)
   faqs          CampaignFaq[]

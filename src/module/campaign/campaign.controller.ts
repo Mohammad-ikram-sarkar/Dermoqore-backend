@@ -55,6 +55,8 @@ export class CampaignController {
     return this.campaignService.uploadImage(file);
   }
 
+  // ── Static admin sub-routes (must come before :id param routes) ──────────
+
   @Get('admin/orders')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
@@ -67,16 +69,24 @@ export class CampaignController {
     return this.campaignService.getAllOrders(page, limit, status, phone);
   }
 
-  @Get('admin/:id/orders')
+  @Get('admin/orders/:orderId')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  getOrders(
-    @Param('id') id: string,
-    @Query('page') page?: string,
-    @Query('limit') limit?: string,
-  ) {
-    return this.campaignService.getOrders(id, page, limit);
+  getOrderById(@Param('orderId') orderId: string) {
+    return this.campaignService.getOrderById(orderId);
   }
+
+  @Put('admin/orders/:orderId/status')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  updateOrderStatus(
+    @Param('orderId') orderId: string,
+    @Body() dto: UpdateCampaignOrderStatusDto,
+  ) {
+    return this.campaignService.updateOrderStatus(orderId, dto.status);
+  }
+
+  // ── Dynamic :id admin routes ───────────────────────────────────────────────
 
   @Get('admin/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -109,21 +119,15 @@ export class CampaignController {
     return this.campaignService.addImage(id, body);
   }
 
-  @Get('admin/orders/:orderId')
+  @Get('admin/:id/orders')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
-  getOrderById(@Param('orderId') orderId: string) {
-    return this.campaignService.getOrderById(orderId);
-  }
-
-  @Put('admin/orders/:orderId/status')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN')
-  updateOrderStatus(
-    @Param('orderId') orderId: string,
-    @Body() dto: UpdateCampaignOrderStatusDto,
+  getOrders(
+    @Param('id') id: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
   ) {
-    return this.campaignService.updateOrderStatus(orderId, dto.status);
+    return this.campaignService.getOrders(id, page, limit);
   }
 
   // ── Public — order placement (must be before :slug) ────────────────────────

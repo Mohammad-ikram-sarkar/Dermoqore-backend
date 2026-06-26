@@ -68,6 +68,20 @@ export class TestimonialDto {
   text: string;
 }
 
+export class CustomerReviewDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  title?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  videoUrl: string;
+}
+
 export class FeatureDto {
   @IsString()
   @IsNotEmpty()
@@ -164,6 +178,12 @@ export class CreateCampaignDto {
   testimonials?: TestimonialDto[];
 
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CustomerReviewDto)
+  @IsOptional()
+  customerReviews?: CustomerReviewDto[];
+
+  @IsArray()
   @IsString({ each: true })
   @IsOptional()
   included?: string[];
@@ -185,6 +205,28 @@ export class CreateCampaignDto {
   @Type(() => FaqItemDto)
   @IsOptional()
   faqs?: FaqItemDto[];
+
+  /* ── BTRI Lab Report ── */
+  @IsString()
+  @IsOptional()
+  labReportTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportDescription?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportButtonText?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportButtonUrl?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  labReportImages?: string[];
 
   @IsEnum(CampaignThemeDto)
   @IsOptional()

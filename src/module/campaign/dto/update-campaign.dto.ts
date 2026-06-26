@@ -14,6 +14,7 @@ import {
   CampaignImageInputDto,
   WhySectionDto,
   TestimonialDto,
+  CustomerReviewDto,
   FeatureDto,
   IngredientDto,
   FaqItemDto,
@@ -72,6 +73,12 @@ export class UpdateCampaignDto {
   testimonials?: TestimonialDto[];
 
   @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CustomerReviewDto)
+  @IsOptional()
+  customerReviews?: CustomerReviewDto[];
+
+  @IsArray()
   @IsString({ each: true })
   @IsOptional()
   included?: string[];
@@ -93,6 +100,28 @@ export class UpdateCampaignDto {
   @Type(() => FaqItemDto)
   @IsOptional()
   faqs?: FaqItemDto[];
+
+  /* ── BTRI Lab Report ── */
+  @IsString()
+  @IsOptional()
+  labReportTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportDescription?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportButtonText?: string;
+
+  @IsString()
+  @IsOptional()
+  labReportButtonUrl?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  labReportImages?: string[];
 
   @IsEnum(CampaignThemeDto)
   @IsOptional()
